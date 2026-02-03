@@ -11,19 +11,19 @@ export const ChatView = () => {
   const { selectedConversationId } = useChatStore();
 
   return (
-    <div className="flex h-screen bg-background">
-      <div className="w-full md:w-80 flex flex-col border-r border-border bg-card">
+    <div className="grid grid-cols-12 min-h-screen bg-background ">
+      <div className="col-span-2 border-r border-border bg-card">
         <Header />
         <ChatList />
       </div>
-      <div className="hidden md:flex flex-1 flex-col">
-        {selectedConversationId && (
-          <div className="flex flex-col h-full bg-background">
+      <div className="hidden md:block col-span-10">
+        {selectedConversationId ? (
+          <div className="grid h-screen items-center bg-background">
             <ChatHeader />
             <MessageList />
             <MessageInput />
           </div>
-        )}
+        ) : <div className="h-screen"></div>}
       </div>
     </div>
   );

@@ -51,15 +51,15 @@ export function MessageList() {
   }, [selectedConversationId, messages?.length]);
 
   if (!messages || !isLoaded || !user || !lastReadMessage) {
-    return <div className="min-h-full" />;
+    return <div className="h-[80vh]" />;
   }
 
   const otherUserTyping = conversation?.typing?.some((id) => id !== user.id);
 
   return (
-    <div className="flex flex-col h-full">
-      <ScrollArea className="flex-1 max-h-112">
-        <div className="p-4 flex flex-col gap-3">
+    <div className="flex flex-col h-[80vh]">
+      <ScrollArea className="h-[80vh] overflow-y-auto">
+        <div className="p-4 flex flex-col gap-3 ">
           {messages.map((message) => {
             const isSelf = message.senderId === user.id;
 

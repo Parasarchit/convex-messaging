@@ -91,7 +91,7 @@ export const MessageInput = () => {
   };
 
   return (
-    <div className="relative flex items-center gap-3 p-4 border-t border-border bg-card">
+    <div className="relative flex items-center gap-3 p-4 border-t border-border bg-card h-[10vh]">
       <div className="flex-1 flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border">
         <Input
           ref={inputRef}
