@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useChatStore } from "@/modules/chat/store/use-chat-store";
+import { UserStatus } from "@/modules/chat/ui/components/user-status";
 import { UserButton } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
 import { format, isToday } from "date-fns";
@@ -49,7 +50,7 @@ export const ChatList = () => {
             </div>
           ) : (
             conversations.map(
-              ({ conversation, user, lastMessage, unreadCount }) => {
+              ({ conversation, user, lastMessage, unreadCount, presence }) => {
                 return (
                   <button
                     key={user._id}
@@ -67,6 +68,7 @@ export const ChatList = () => {
                           {user.name.substring(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
+                      <UserStatus lastSeen={presence?.lastSeen} />
                       {(unreadCount ?? 0) > 0 && (
                         <span className="absolute -top-1 -right-1 min-w-4.5 h-4.5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
                           {unreadCount}

@@ -21,4 +21,8 @@ export default defineSchema({
     userId: v.string(),
     lastReadMessageId: v.optional(v.id("messages")),
   }).index("by_conversationId_by_userId", ["conversationId", "userId"]),
+  presence: defineTable({
+    userId: v.string(), 
+    lastSeen: v.number(),
+  }).index("by_userId", ["userId"]),
 });

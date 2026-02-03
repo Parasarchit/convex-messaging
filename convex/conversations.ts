@@ -64,11 +64,17 @@ export const list = query({
           ? messages.findIndex((msg) => msg._id === lastReadMessageId)
           : messages.length;
 
+        const presence = await ctx.db
+          .query("presence")
+          .withIndex("by_userId", (q) => q.eq("userId", user.clerkId))
+          .unique();
+
         return {
           user,
           conversation: existingConversation,
           lastMessage,
           unreadCount: Math.max(0, unreadCount),
+          presence,
         };
       })
     );
@@ -245,3 +251,5 @@ export const getLastReadMessage = query({
       .unique();
   },
 });
+
+
