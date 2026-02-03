@@ -1,0 +1,3 @@
+import { ChatView } from "@/modules/chat/ui/views/chat-view";
+
+export default ChatView;
