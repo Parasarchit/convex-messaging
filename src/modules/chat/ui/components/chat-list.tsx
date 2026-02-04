@@ -103,15 +103,22 @@ export const ChatList = () => {
                             return "Typing...";
                           }
 
-                          if (!lastMessage || !lastMessage.text) {
+                          if (!lastMessage) {
                             return "";
                           }
 
-                          if (lastMessage.senderId === user.clerkId) {
-                            return lastMessage.text;
-                          } else {
-                            return `You: ${lastMessage.text}`;
+                          if (
+                            !lastMessage.text &&
+                            (lastMessage.attachments?.length ?? 0) > 0
+                          ) {
+                            return lastMessage.senderId === user.clerkId
+                              ? "📎 Attachment"
+                              : "You: 📎 Attachment";
                           }
+
+                          return lastMessage.senderId === user.clerkId
+                            ? lastMessage.text
+                            : `You: ${lastMessage.text}`;
                         })()}
                       </p>
                     </div>

@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import { useMutation, useQuery } from "convex/react";
 import { useEffect, useRef } from "react";
 import { api } from "../../../../../convex/_generated/api";
+import Image from "next/image";
 
 export function MessageList() {
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -51,13 +52,13 @@ export function MessageList() {
   }, [selectedConversationId, messages?.length]);
 
   if (!messages || !isLoaded || !user || !lastReadMessage) {
-    return <div className="h-[80vh]" />;
+    return <div className="h-[75vh]" />;
   }
 
   const otherUserTyping = conversation?.typing?.some((id) => id !== user.id);
 
   return (
-    <div className="flex flex-col h-[80vh]">
+    <div className="flex flex-col h-[75vh]">
       <ScrollArea className="h-[80vh] overflow-y-auto">
         <div className="p-4 flex flex-col gap-3 ">
           {messages.map((message) => {
@@ -71,22 +72,66 @@ export function MessageList() {
                   "justify-start": !isSelf,
                 })}
               >
-                <div
-                  className={cn(
-                    "max-w-[75%] px-4 py-2 rounded-2xl text-sm wrap-break-word",
-                    isSelf
-                      ? "bg-primary text-primary-foreground rounded-br-sm"
-                      : "bg-muted text-foreground rounded-bl-sm"
-                  )}
-                >
-                  {message.text}
-                </div>
-                {isSelf &&
-                  message._id === lastReadMessage.lastReadMessageId && (
-                    <div className="ml-2 mt-auto mb-1 text-[11px] text-muted-foreground italic">
-                      Seen
+                <div className="flex flex-col gap-2 max-w-[75%]">
+                  {/* attachments (outside bubble) */}
+                  {message.attachments?.length > 0 && (
+                    <div
+                      className={cn(
+                        "flex flex-col gap-2",
+                        isSelf ? "items-end" : "items-start"
+                      )}
+                    >
+                      {message.attachments?.length > 0 && (
+                        <div
+                          className={cn(
+                            "grid gap-2",
+                            message.attachments.length === 1
+                              ? "grid-cols-1"
+                              : message.attachments.length === 2
+                                ? "grid-cols-2"
+                                : "grid-cols-3",
+                            isSelf ? "justify-items-end" : "justify-items-start"
+                          )}
+                        >
+                          {message.attachments.map((attachment, idx) =>
+                            attachment ? (
+                              <Image
+                                key={idx}
+                                src={attachment}
+                                alt={`Attachment ${idx + 1}`}
+                                width={120}
+                                height={120}
+                                className="rounded-lg border object-cover"
+                              />
+                            ) : null
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
+
+                  {/* text bubble */}
+                  {message.text && (
+                    <div
+                      className={cn(
+                        "px-4 py-2 rounded-2xl text-sm wrap-break-word w-fit",
+                        isSelf
+                          ? "bg-primary text-primary-foreground rounded-br-sm self-end"
+                          : "bg-muted text-foreground rounded-bl-sm self-start"
+                      )}
+                    >
+                      {message.text}
+                    </div>
+                  )}
+
+                  {/* seen */}
+                  {isSelf &&
+                    message._id === lastReadMessage.lastReadMessageId && (
+                      <div className="text-[11px] text-muted-foreground italic self-end">
+                        Seen
+                      </div>
+                    )}
+                </div>
               </div>
             );
           })}

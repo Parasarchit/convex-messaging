@@ -15,6 +15,7 @@ export default defineSchema({
     conversationId: v.id("conversations"),
     senderId: v.string(),
     text: v.string(),
+    attachments: v.optional(v.array(v.id("_storage"))),
   }).index("by_conversationId", ["conversationId"]),
   conversationReads: defineTable({
     conversationId: v.id("conversations"),
@@ -22,7 +23,7 @@ export default defineSchema({
     lastReadMessageId: v.optional(v.id("messages")),
   }).index("by_conversationId_by_userId", ["conversationId", "userId"]),
   presence: defineTable({
-    userId: v.string(), 
+    userId: v.string(),
     lastSeen: v.number(),
   }).index("by_userId", ["userId"]),
 });

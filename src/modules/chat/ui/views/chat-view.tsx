@@ -21,7 +21,7 @@ export const ChatView = () => {
       </div>
       <div className="hidden md:block col-span-10">
         {selectedConversationId ? (
-          <div className="grid h-screen items-center bg-background">
+          <div className="grid h-screen items-center bg-background overflow-hidden">
             <ChatHeader />
             <MessageList />
             <MessageInput />
