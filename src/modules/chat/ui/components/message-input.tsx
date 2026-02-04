@@ -130,6 +130,7 @@ export const MessageInput = () => {
         <input
           ref={fileInputRef}
           type="file"
+          accept="image/*"
           multiple
           hidden
           onChange={(e) => {

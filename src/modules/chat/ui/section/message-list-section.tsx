@@ -73,7 +73,6 @@ export function MessageList() {
                 })}
               >
                 <div className="flex flex-col gap-2 max-w-[75%]">
-                  {/* attachments (outside bubble) */}
                   {message.attachments?.length > 0 && (
                     <div
                       className={cn(
@@ -110,7 +109,6 @@ export function MessageList() {
                     </div>
                   )}
 
-                  {/* text bubble */}
                   {message.text && (
                     <div
                       className={cn(
@@ -124,7 +122,6 @@ export function MessageList() {
                     </div>
                   )}
 
-                  {/* seen */}
                   {isSelf &&
                     message._id === lastReadMessage.lastReadMessageId && (
                       <div className="text-[11px] text-muted-foreground italic self-end">
